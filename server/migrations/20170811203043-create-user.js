@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
-  up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Users', {
+  up(queryInterface, Sequelize) {
+    return queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,18 +17,17 @@ module.exports = {
       isActivated: {
         type: Sequelize.BOOLEAN
       },
-      profile_id: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       }
-    }),
-  down: (queryInterface, Sequelize) =>
-    queryInterface.dropTable('Users')
+    });
+  },
+  down(queryInterface, Sequelize) {
+    return queryInterface.dropTable('Users');
+  }
 };
