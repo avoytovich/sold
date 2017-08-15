@@ -17,7 +17,7 @@ module.exports = {
       contact: {
         type: Sequelize.STRING
       },
-      user_id: {
+      UserId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
@@ -25,11 +25,9 @@ module.exports = {
         }
       },
       createdAt: {
-        allowNull: true,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: true,
         type: Sequelize.DATE
       }
     });

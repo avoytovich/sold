@@ -4,11 +4,13 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     avatar: DataTypes.STRING,
     contact: DataTypes.STRING,
-    user_id: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER
   }, {
     classMethods: {
-      associate: (models) => {
-        Profile.belongsTo(models.User, {foreignKey: 'user_id'});
+      associate(models) {
+        Profile.belongsTo(models.User, {
+          foreignKey: 'UserId'
+        });
       }
     }
   });
