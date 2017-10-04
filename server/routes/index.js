@@ -1,4 +1,4 @@
-const { userController } = require('./../controllers');
+const { userController, loginController } = require('./../controllers');
 
 module.exports =
   (app) => {
@@ -7,4 +7,5 @@ module.exports =
     }));
 
     app.post('/user', userController.create);
+    app.post('/login', loginController.login);
   };
