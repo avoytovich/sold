@@ -8,7 +8,7 @@ module.exports = {
         password: req.body.password
       }})
         .then(user => {
-          user && res.status(200).send({message: 'Email already in use'}) ||
+          user && res.status(400).send({message: 'Email already in use'}) ||
             User.create(Object.assign({}, req.body))
               .then(user => res.status(200).send(user));
         })
