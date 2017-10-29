@@ -1,15 +1,20 @@
 const { User } = require('./../models');
+const passwordHash = require('password-hash');
 
 module.exports = {
   create(req, res) {
     User.findOne({
       where: {
-        email: req.body.email,
-        password: req.body.password
+        email: req.body.email
       }})
         .then(user => {
-          user && res.status(400).send({message: 'Email already in use'}) ||
-            User.create(Object.assign({}, req.body))
+          user && passwordHash.verify(req.body.password, user.password) &&
+          res.status(400).send({message: 'Email already in use'}) ||
+            User.create({
+              email: req.body.email,
+              password: passwordHash.generate(req.body.password),
+              isActivated: false
+            })
               .then(user => res.status(200).send(user));
         })
           .catch(error => res.status(404).send(error));
