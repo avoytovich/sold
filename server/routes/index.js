@@ -1,4 +1,4 @@
-const { userController, loginController } = require('./../controllers');
+const { userController, loginController, proposalsController } = require('./../controllers');
 
 module.exports =
   (app) => {
@@ -7,6 +7,12 @@ module.exports =
     }));
 
     app.post('/user', userController.create);
+    
     app.post('/login', loginController.login);
     app.get('/activation/:token', loginController.activation);
+
+    app.post('/proposals', proposalsController.create);
+    app.get('/proposals/list', proposalsController.list);
+    app.post('/proposals/list/email', proposalsController.retrieve);
+    app.delete('/proposals/list/:proposal', proposalsController.destroy);
   };

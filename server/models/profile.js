@@ -5,14 +5,13 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     contact: DataTypes.STRING,
     UserId: DataTypes.INTEGER
-  }, {
-    classMethods: {
-      associate(models) {
-        Profile.belongsTo(models.User, {
-          foreignKey: 'UserId'
-        });
-      }
-    }
   });
+
+  Profile.associate = models => {
+    Profile.belongsTo(models.User, {
+      foreignKey: 'UserId'
+    });
+  };
+  
   return Profile;
 };
