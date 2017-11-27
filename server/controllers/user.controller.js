@@ -20,7 +20,8 @@ module.exports = {
               isActivated: false
             })
               .then(user => {
-                let token = jwt.sign({id: user.id}, secret.key, {expiresIn: constants.TIME_TOKEN});
+                let token = jwt.sign({id: user.id, name: req.body.name},
+                  secret.key, {expiresIn: constants.TIME_TOKEN});
                 let mailOptions = {
                   from: '"soldapp" <soldapp@ukr.net>',
                   to: user.email,

@@ -26,9 +26,10 @@ module.exports = {
   activation(req, res) {
     let token = req.params.token;
     let decoder = jwt.verify(token, secret.key, (err, decoded) => {
-      return decoded && decoded.id || res.status(498).json({message: 'link is not valid'});
+      return decoded || res.status(498).json({message: 'link is not valid'});
     });
-    User.findById(decoder)
+    console.log(decoder);
+    User.findById(decoder.id)
       .then(user => {
         !user && res.status(404).json({message: 'userNotFound'}) ||
           user.isActivated && res.status(418).json({message: 'linkAlreadyActivated'}) ||
@@ -36,7 +37,8 @@ module.exports = {
               isActivated: true
             }) &&
               Profile.create({
-                UserId: decoder
+                UserId: decoder.id,
+                name: decoder.name
               }) &&
                 res.redirect('http://localhost:8080/');
       })
