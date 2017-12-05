@@ -1,6 +1,6 @@
 const passwordHash = require('password-hash');
 const jwt = require('jsonwebtoken');
-const { User } = require('./../models');
+const { User, Profile } = require('./../models');
 const secret = require('./../../config/jwt.secretkey.json');
 const constants = require('./../helper/constants');
 const { send } = require('./../helper/mailer');
@@ -36,5 +36,18 @@ module.exports = {
               });
         })
           .catch(error => res.status(404).send(error));
+  },
+
+  retrieve(req, res) {
+    Profile.findOne({
+      where: {
+        UserId: req.decoded.id
+      }
+    })
+      .then(profile => {
+        res.status(200)
+          .json({name: profile.dataValues.name});
+      })
+        .catch(error => res.status(400).send(error));
   }
 };
