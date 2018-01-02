@@ -20,6 +20,7 @@ module.exports = {
   },
 
   retrieve(req, res) {
+    console.log(req);
     Profile.findOne({
       where: {
         UserId: req.decoded.id
