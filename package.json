@@ -24,11 +24,13 @@
   "homepage": "https://github.com/avoytovich/sold#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "cloudinary": "^1.9.1",
     "cors": "^2.8.4",
     "express": "^4.15.3",
     "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.4",
     "morgan": "^1.8.2",
+    "multer": "^1.3.0",
     "nodemailer": "^4.3.1",
     "password-hash": "^1.2.2",
     "pg": "^7.0.2",
