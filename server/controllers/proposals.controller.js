@@ -1,6 +1,4 @@
 const { Proposals } = require('./../models');
-const { User } = require('./../models');
-const { send } = require('./../helper/mailer');
 
 module.exports = {
   create(req, res) {
@@ -28,32 +26,30 @@ module.exports = {
           getProposals.push(proposal.dataValues.title);
         });
         getProposals.reverse();
-      }).then(() => {
+      })
+        .then(() => {
         res.status(200).send(getProposals);
       })
         .catch(error => res.status(404).send(error));
   },
 
   retrieve(req, res) {
-    Proposals.findOne({
-      include: [User],
+    let getMyProposals = [];
+    Proposals.findAll({
       where: {
-        title: req.body.title
+        UserId: req.decoded.id
       }
     })
-      .then(proposal => {
-        let mailOptions = {
-          from: '"soldapp" <soldapp@ukr.net>',
-          to: proposal.dataValues.User.email,
-          subject: 'Offer from soldApp',
-          text: req.body.offer,
-          html: `<b>${req.body.offer}</b>`
-        };
-        send(mailOptions);
-        res.status(200)
-          .json({message: 'Congratulation, you sent offer'});
+      .then(proposals => {
+        proposals.forEach(proposal => {
+          getMyProposals.push(proposal.dataValues.title);
+        });
+        getMyProposals.reverse();
       })
-        .catch(error => res.status(400).send(error));
+        .then(() => {
+        res.status(200).send(getMyProposals);
+      })
+        .catch(error => res.status(404).send(error));
   },
 
   destroy(req, res) {

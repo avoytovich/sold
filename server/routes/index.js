@@ -1,5 +1,5 @@
 const { userController, loginController, proposalsController,
-  profileController, uploadController } = require('./../controllers');
+  profileController, uploadController, offersController } = require('./../controllers');
 
 const multer = require('multer');
 const cloudinary = require('cloudinary');
@@ -19,8 +19,11 @@ module.exports =
 
     app.post('/proposals', proposalsController.create);
     app.get('/proposals/list', proposalsController.list);
-    app.post('/proposals/list/email', proposalsController.retrieve);
+    app.get('/proposals/retrieve', proposalsController.retrieve);
     app.delete('/proposals/list/:proposal', proposalsController.destroy);
+
+    app.post('/offers', offersController.create);
+    app.post('/offers/list/email', offersController.create);
 
     cloudinary.config({
       cloud_name: 'dtfm1ad4t',
