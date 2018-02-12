@@ -30,5 +30,26 @@ module.exports = {
           });
       })
         .catch(error => res.status(400).send(error));
+  },
+
+  retrieve(req, res) {
+    Proposals.findOne({
+      where: {
+        UserId: req.decoded.id,
+        title: req.body.title
+      }
+    })
+      .then(proposal => {
+        Offers.findAll({
+          where: {
+            ProposalsId: proposal.dataValues.id
+          }
+        })
+          .then(offers => {
+            res.status(200).send(offers);
+          });
+      })
+        .catch(error => res.status(400).send(error));
   }
+
 };

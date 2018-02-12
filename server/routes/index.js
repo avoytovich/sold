@@ -22,8 +22,8 @@ module.exports =
     app.get('/proposals/retrieve', proposalsController.retrieve);
     app.delete('/proposals/list/:proposal', proposalsController.destroy);
 
-    app.post('/offers', offersController.create);
     app.post('/offers/list/email', offersController.create);
+    app.post('/offers/list/retrieve', offersController.retrieve);
 
     cloudinary.config({
       cloud_name: 'dtfm1ad4t',
