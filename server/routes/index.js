@@ -24,6 +24,7 @@ module.exports =
 
     app.post('/offers/list/email', offersController.create);
     app.post('/offers/list/retrieve', offersController.retrieve);
+    app.post('/offers/reply/contact', offersController.rifle);
 
     cloudinary.config({
       cloud_name: 'dtfm1ad4t',
