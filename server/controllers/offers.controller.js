@@ -1,6 +1,4 @@
-const { Offers } = require('./../models');
-const { Proposals } = require('./../models');
-const { User } = require('./../models');
+const { Offers, Proposals, User } = require('./../models');
 const { send } = require('./../helper/mailer');
 
 module.exports = {
@@ -60,17 +58,34 @@ module.exports = {
       }
     })
       .then(offer => {
-        let mailOptions = {
-          from: '"soldapp" <soldapp@ukr.net>',
-          to: offer.dataValues.User.email,
-          subject: 'user contact details, who are interested in your suggestion from soldApp',
-          text: req.body.contact,
-          html: `<b>${req.body.contact}</b>`
-        };
-        send(mailOptions);
-        res.status(200).json({message: 'You have successfully send contact!'});
+        Proposals.findOne({
+          include: [User],
+          where: {
+            id: offer.dataValues.ProposalsId
+          }
+        })
+          .then(proposal => {
+            User.findOne({
+              where: {
+                id: proposal.dataValues.UserId
+              }
+            })
+              .then(user => {
+                let mailOptions = {
+                  from: '"soldapp" <soldapp@ukr.net>',
+                  to: offer.dataValues.User.email,
+                  subject: 'user contact details, who are interested in your suggestion from soldApp',
+                  text: req.body.contact,
+                  html: `<b>Greeting from SoldApp, you've received this mail, because recently, you've suggested to me
+                    ${req.body.title}. I am excited about that and invite you to contact with me through this email
+                      ${user.dataValues.email}. Also, want to add some additional information ${req.body.contact}.
+                        Thank's</b>`
+                };
+                send(mailOptions);
+                res.status(200).json({message: 'You have successfully send contact!'});
+              });
+          });
       })
         .catch(error => res.status(400).send(error));
   }
-
 };
