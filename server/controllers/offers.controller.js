@@ -1,5 +1,6 @@
 const { Offers, Proposals, User } = require('./../models');
 const { send } = require('./../helper/mailer');
+const constants = require('./../helper/constants');
 
 module.exports = {
   create(req, res) {
@@ -15,7 +16,8 @@ module.exports = {
           to: proposal.dataValues.User.email,
           subject: 'Offer from soldApp',
           text: req.body.offer,
-          html: `<b>${req.body.offer}</b>`
+          html: `<b>Greeting from SoldApp! I have an offer to your proposal
+            ${req.body.title}. I want to suggest you ${req.body.offer}. Thanks</b>`
         };
         send(mailOptions);
         Offers.create({
@@ -24,7 +26,7 @@ module.exports = {
           UserId: req.decoded.id
         })
           .then(offer => {
-            res.status(200).json({message: 'You have successfully send offer!'});
+            res.status(200).json({message: constants.messages.send_offer});
           });
       })
         .catch(error => res.status(400).send(error));
@@ -82,7 +84,7 @@ module.exports = {
                         Thank's</b>`
                 };
                 send(mailOptions);
-                res.status(200).json({message: 'You have successfully send contact!'});
+                res.status(200).json({message: constants.messages.send_contact});
               });
           });
       })

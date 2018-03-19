@@ -1,4 +1,5 @@
 const { Profile } = require('./../models');
+const constants = require('./../helper/constants');
 
 module.exports = {
   update(req, res) {
@@ -12,7 +13,7 @@ module.exports = {
         profile.update(Object.assign({}, req.body))
           .then(profile => res.status(200).json({
             profile,
-            message: 'profile was successfully updated'
+            message: constants.messages.profile_was_successfully_updated
           }))
             .catch(error => res.status(400).send(error));
       })
