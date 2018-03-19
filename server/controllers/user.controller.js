@@ -32,7 +32,7 @@ module.exports = {
                 };
                 send(mailOptions);
                 res.status(200)
-                .json({message: 'Congratulation, check your email for activation'});
+                .json({message: constants.messages.check_your_email});
               });
         })
           .catch(error => res.status(404).send(error));

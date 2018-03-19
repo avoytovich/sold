@@ -1,4 +1,5 @@
 const { Proposals } = require('./../models');
+const constants = require('./../helper/constants');
 
 module.exports = {
   create(req, res) {
@@ -9,11 +10,11 @@ module.exports = {
       }
     })
       .then(proposal => {
-        proposal && res.status(400).json({message: 'Proposal have been created already!'}) ||
+        proposal && res.status(400).json({message: constants.messages.proposal_created_already}) ||
           Proposals.create({
             title: req.body.title,
             UserId: req.decoded.id
-          }) && res.status(200).json({message: 'Proposal have been added!'});
+          }) && res.status(200).json({message: constants.messages.proposal_added});
       })
         .catch(error => res.status(404).send(error));
   },
@@ -61,10 +62,10 @@ module.exports = {
     })
       .then(proposal => {
         !proposal && res.status(400)
-          .json({message: 'Sorry, you haven\'t permission to delete this proposal!'}) ||
+          .json({message: constants.messages.not_permission_to_delete}) ||
             proposal.destroy()
               .then(proposal => res.status(200)
-                .json({message: 'Congratulation, you deleted proposal'}));
+                .json({message: constants.messages.deleted_proposal}));
       })
         .catch(error => res.status(400).send(error));
   }

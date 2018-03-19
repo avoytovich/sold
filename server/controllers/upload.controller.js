@@ -1,5 +1,6 @@
 const cloudinary = require('cloudinary');
 const { Profile } = require('./../models');
+const constants = require('./../helper/constants');
 
 module.exports = {
   fileUploadMiddleware(req, res) {
