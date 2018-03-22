@@ -13,7 +13,7 @@ module.exports = {
     }).then(user => {
       user && passwordHash.verify(req.body.password, user.password) && user.isActivated &&
         res.status(200).json({
-          message: constants.messages.congratulations,
+          message: constants.messages.congratulation,
           token: jwt.sign({id: user.id}, secret.key, {expiresIn: constants.TIME_TOKEN})
         }) ||
       user && user.isActivated &&
