@@ -1,4 +1,19 @@
+var API;
+if (process.env.NODE_ENV === 'production') {
+  API = {
+    HOST: 'https://radiant-tor-53924.herokuapp.com'
+  };
+  API.URL = API.HOST;
+} else {
+  API = {
+    HOST: 'http://localhost:',
+    PORT: '8088'
+  };
+  API.URL = API.HOST + API.PORT;
+}
+
 module.exports = {
+  API,
   TIME_TOKEN: '1d',
   messages: {
     congratulation: 'Congratulation, you are logged!',
