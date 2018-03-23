@@ -24,11 +24,11 @@ module.exports = {
                   secret.key, {expiresIn: constants.TIME_TOKEN});
                 let mailOptions = {
                   from: '"soldapp" <soldapp@ukr.net>',
-                  to: user.email,
+                  to: req.body.email,
                   subject: 'Registration for soldApp',
                   text: 'click on link to activate your account',
                   html: `<b>click on link below to activate your account</b>
-                           <a href="http://localhost:8033/activation/${token}">link</a>`
+                           <a href=${constants.API.URL}/activation/${token}>link</a>`
                 };
                 send(mailOptions);
                 res.status(200)
